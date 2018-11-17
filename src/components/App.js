@@ -15,11 +15,27 @@ class App extends React.Component {
   componentDidMount() {
     // linking the app to firebase
     const { params } = this.props.match;
+    // first reinstate the local storage
+    const localStorageRef = localStorage.getItem(params.storeId);
+    // check if exists (won't exist on first visit ever)
+    if (localStorageRef) {
+      this.setState({ order: JSON.parse(localStorageRef) });
+    }
     // need to create a reference to a particular piece of the online database
+    // and then give an object representing the state and the piece of our local state
+    // we want to link
     this.ref = base.syncState(`${params.storeId}/fishes`, {
       context: this,
       state: "fishes"
     });
+  }
+
+  componentDidUpdate() {
+    // this will run everytime the state is updated
+    // need to store the order fot for this specific store
+    const { params } = this.props.match;
+    localStorage.setItem(params.storeId, JSON.stringify(this.state.order));
+    console.log("it updated");
   }
 
   componentWillUnmount() {
