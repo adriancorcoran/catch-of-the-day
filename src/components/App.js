@@ -35,7 +35,6 @@ class App extends React.Component {
     // need to store the order fot for this specific store
     const { params } = this.props.match;
     localStorage.setItem(params.storeId, JSON.stringify(this.state.order));
-    console.log("it updated");
   }
 
   componentWillUnmount() {
