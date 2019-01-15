@@ -63,11 +63,29 @@ class App extends React.Component {
     this.setState({ fishes }); //  same shorthand for this.setState({ fishes: fishes });
   };
 
+  deleteFish = key => {
+    // 1. take a copy of state
+    const fishes = { ...this.state.fishes };
+    // 2. update the state and remove item
+    fishes[key] = null; //  need to set to null, so that Firebase will remove it as well
+    // 3. update state
+    this.setState({ fishes });
+  };
+
   addToOrder = key => {
     // 1. take a copy of the order state
     const order = { ...this.state.order };
     // 2. either add the fish key or increase the quantity
     order[key] = order[key] + 1 || 1;
+    // 3. update the state
+    this.setState({ order });
+  };
+
+  removeFromOrder = key => {
+    // 1. take a copy of the order state
+    const order = { ...this.state.order };
+    // 2. either remove the fish key
+    delete order[key];
     // 3. update the state
     this.setState({ order });
   };
@@ -88,10 +106,15 @@ class App extends React.Component {
             ))}
           </ul>
         </div>
-        <Order fishes={this.state.fishes} order={this.state.order} />
+        <Order
+          fishes={this.state.fishes}
+          order={this.state.order}
+          removeFromOrder={this.removeFromOrder}
+        />
         <Inventory
           addFish={this.addFish}
           updateFish={this.updateFish}
+          deleteFish={this.deleteFish}
           loadSampleFishes={this.loadSampleFishes}
           fishes={this.state.fishes}
         />
