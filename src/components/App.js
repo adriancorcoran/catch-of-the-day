@@ -38,7 +38,7 @@ class App extends React.Component {
 
   componentDidUpdate() {
     // this will run everytime the state is updated
-    // need to store the order fot for this specific store
+    // need to store the order for for this specific store
     const { params } = this.props.match;
     localStorage.setItem(params.storeId, JSON.stringify(this.state.order));
   }
@@ -123,6 +123,7 @@ class App extends React.Component {
           deleteFish={this.deleteFish}
           loadSampleFishes={this.loadSampleFishes}
           fishes={this.state.fishes}
+          storeId={this.props.match.params.storeId}
         />
       </div>
     );
