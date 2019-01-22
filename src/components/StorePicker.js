@@ -1,7 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { getFunName } from "../helpers";
 
 class StorePicker extends React.Component {
+  // static so that it applies to all instances of Fish
+  static propTypes = {
+    history: PropTypes.object
+  };
+
   myInput = React.createRef();
 
   goToStore = event => {
